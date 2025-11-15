@@ -144,10 +144,6 @@ Feel free to submit issues, fork the repository, and create pull requests for an
 
 MIT License - feel free to use and modify as needed.
 
-## Credits
-
-Created to solve the problem of too many clicks required to highlight text on Kindle Cloud Reader.
-
 ---
 
 **Enjoy faster highlighting on your Kindle books! 📚✨**
