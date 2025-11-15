@@ -1,0 +1,19 @@
+For the Kindle website at https://read.amazon.in/ , I am looking to build a Chrome extension that solves the problem “Users are not able to use keyboard shortcuts to quickly highlight the selected text”. This is to eliminate the number of clicks required by the user and to ease the process of highlighting text as a result.
+
+
+
+Now I’d like you to build a Chrome extension that gives the user the abillity to map the keyboard shortcut they desire to each of the colors that show up when a text is selected. There are 4 colors in total which show up as the below div
+
+
+
+<div id="selection-popover_wrapper" class="selection-popover_wrapper"><button class="selection-button highlight selection-button--yellow   " aria-label="yellow highlight"></button><button class="selection-button highlight selection-button--blue   " aria-label="blue highlight"></button><button class="selection-button highlight selection-button--pink   " aria-label="pink highlight"></button><button class="selection-button highlight selection-button--orange   " aria-label="orange highlight"></button><div class="copy-content_wrapper" aria-relevant="all" aria-live="polite"><button class="selection-button copy icon  " aria-label="Copy"><ion-icon src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Ik0xNS44MTgxIDEyLjgxODJWOUgyOC4yMjcyVjI2LjE4MThIMjQuNDA5IiBzdHJva2U9InZhcigtLXByaW1hcnktY29sb3IpIiBzdHJva2Utd2lkdGg9IjEuMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CiAgICA8cmVjdCB4PSIxMiIgeT0iMTIuODE4MiIgd2lkdGg9IjEyLjQwOTEiIGhlaWdodD0iMTcuMTgxOCIgc3Ryb2tlPSJ2YXIoLS1wcmltYXJ5LWNvbG9yKSIgc3Ryb2tlLXdpZHRoPSIxLjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4K" class="selection-popover-icon ios" role="img"></ion-icon></button></div><button class="selection-button note icon  " aria-label="Note"><ion-icon src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iNDRweCIgaGVpZ2h0PSI0NHB4IiB2aWV3Qm94PSIwIDAgNDQgNDQiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8ZyBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgICAgICA8Zz4KICAgICAgICAgICAgPHJlY3QgZmlsbC1vcGFjaXR5PSIwIiBmaWxsPSIjRkZGRkZGIiB4PSIwIiB5PSIwIiB3aWR0aD0iNDQiIGhlaWdodD0iNDQiPjwvcmVjdD4KICAgICAgICAgICAgPHBvbHlsaW5lIHN0cm9rZT0idmFyKC0tcHJpbWFyeS1jb2xvcikiIHN0cm9rZS13aWR0aD0iMS4zIiBzdHJva2UtbGluZWNhcD0icm91bmQiCiAgICAgICAgICAgICAgICAgICAgICBzdHJva2UtbGluZWpvaW49InJvdW5kIgogICAgICAgICAgICAgICAgICAgICAgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjEuMDAwMDAwLCAyMy41MDAwMDApIHJvdGF0ZSgxODAuMDAwMDAwKSB0cmFuc2xhdGUoLTIxLjAwMDAwMCwgLTIzLjUwMDAwMCkgIgogICAgICAgICAgICAgICAgICAgICAgcG9pbnRzPSIxNCAyNyAxNCAxNCAyOCAxNCAyOCAzMyAyMCAzMyI+PC9wb2x5bGluZT4KICAgICAgICAgICAgPHBhdGgKICAgICAgICAgICAgICAgICAgICBkPSJNMjYuNDY5OTczNyw5LjcwOTUxNDc0IEwyNi40Njk5NzM3LDIxLjcwOTUxNDcgTDI0Ljk2OTk3MzcsMjQuNzA5NTE0NyBMMjMuNDY5OTczNywyMS43MDk1MTQ3IEwyMy40Njk5NzM3LDkuNzA5NTE0NzQgTDI2LjQ2OTk3MzcsOS43MDk1MTQ3NCBaIgogICAgICAgICAgICAgICAgICAgIGlkPSJQZW4iIHN0cm9rZT0idmFyKC0tcHJpbWFyeS1jb2xvcikiIHN0cm9rZS13aWR0aD0iMS4zIiBzdHJva2UtbGluZWNhcD0icm91bmQiCiAgICAgICAgICAgICAgICAgICAgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIKICAgICAgICAgICAgICAgICAgICB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyNC45Njk5NzQsIDE3LjIwOTUxNSkgcm90YXRlKDQwLjAwMDAwMCkgdHJhbnNsYXRlKC0yNC45Njk5NzQsIC0xNy4yMDk1MTUpICI+PC9wYXRoPgogICAgICAgIDwvZz4KICAgIDwvZz4KPC9zdmc+Cg==" class="selection-popover-icon ios" role="img"></ion-icon></button></div>
+
+
+
+Example: I could use the class “selection-button highlight selection-button--yellow” and aria-label as a fallback
+
+
+
+Now build me a Chrome extension that solve this problem.
+
+

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SVG to PNG Converter</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #667eea;
+      margin-bottom: 20px;
+    }
+    .icon-section {
+      margin: 30px 0;
+      padding: 20px;
+      background: #f9f9f9;
+      border-radius: 6px;
+    }
+    .icon-section h3 {
+      margin-bottom: 15px;
+      color: #333;
+    }
+    canvas {
+      border: 1px solid #ddd;
+      margin: 10px 0;
+    }
+    button {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      margin: 5px;
+    }
+    button:hover {
+      opacity: 0.9;
+    }
+    .instructions {
+      background: #e3f2fd;
+      padding: 15px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      border-left: 4px solid #2196F3;
+    }
+    .success {
+      color: #4CAF50;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📦 Icon Converter for Kindle Highlighter</h1>
+    
+    <div class="instructions">
+      <strong>Instructions:</strong> This page will convert the SVG icons to PNG format. 
+      Simply click the "Download PNG" buttons below to save each icon.
+    </div>
+
+    <div class="icon-section">
+      <h3>Icon 128x128</h3>
+      <canvas id="canvas128" width="128" height="128"></canvas>
+      <div>
+        <button onclick="downloadIcon(128)">Download icon128.png</button>
+        <span id="status128" class="success"></span>
+      </div>
+    </div>
+
+    <div class="icon-section">
+      <h3>Icon 48x48</h3>
+      <canvas id="canvas48" width="48" height="48"></canvas>
+      <div>
+        <button onclick="downloadIcon(48)">Download icon48.png</button>
+        <span id="status48" class="success"></span>
+      </div>
+    </div>
+
+    <div class="icon-section">
+      <h3>Icon 16x16</h3>
+      <canvas id="canvas16" width="16" height="16"></canvas>
+      <div>
+        <button onclick="downloadIcon(16)">Download icon16.png</button>
+        <span id="status16" class="success"></span>
+      </div>
+    </div>
+
+    <div class="instructions" style="margin-top: 30px;">
+      <strong>After downloading:</strong> Place the PNG files in the <code>icons/</code> folder 
+      (they should be named icon16.png, icon48.png, and icon128.png). You can then delete the SVG files if you wish.
+    </div>
+  </div>
+
+  <script>
+    // SVG content for each icon size
+    const svgContent = {
+      128: `<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+          </linearGradient>
+        </defs>
+        <rect width="128" height="128" rx="24" fill="url(#grad1)"/>
+        <rect x="32" y="28" width="64" height="72" rx="4" fill="white" opacity="0.9"/>
+        <rect x="38" y="34" width="52" height="60" rx="2" fill="none" stroke="#667eea" stroke-width="2"/>
+        <rect x="44" y="44" width="40" height="3" rx="1.5" fill="#FFD700"/>
+        <rect x="44" y="54" width="35" height="3" rx="1.5" fill="#1E90FF"/>
+        <rect x="44" y="64" width="38" height="3" rx="1.5" fill="#FF69B4"/>
+        <rect x="44" y="74" width="36" height="3" rx="1.5" fill="#FF8C00"/>
+        <circle cx="100" cy="100" r="18" fill="white" opacity="0.95"/>
+        <text x="100" y="106" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#667eea" text-anchor="middle">⌨</text>
+      </svg>`,
+      48: `<svg width="48" height="48" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+          </linearGradient>
+        </defs>
+        <rect width="48" height="48" rx="8" fill="url(#grad2)"/>
+        <rect x="12" y="10" width="24" height="28" rx="2" fill="white" opacity="0.9"/>
+        <rect x="14" y="12" width="20" height="24" rx="1" fill="none" stroke="#667eea" stroke-width="1.5"/>
+        <rect x="16" y="16" width="16" height="2" rx="1" fill="#FFD700"/>
+        <rect x="16" y="20" width="14" height="2" rx="1" fill="#1E90FF"/>
+        <rect x="16" y="24" width="15" height="2" rx="1" fill="#FF69B4"/>
+        <rect x="16" y="28" width="14" height="2" rx="1" fill="#FF8C00"/>
+      </svg>`,
+      16: `<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="grad3" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+          </linearGradient>
+        </defs>
+        <rect width="16" height="16" rx="3" fill="url(#grad3)"/>
+        <rect x="4" y="3" width="8" height="10" rx="1" fill="white" opacity="0.9"/>
+        <rect x="5" y="5" width="6" height="1" rx="0.5" fill="#FFD700"/>
+        <rect x="5" y="7" width="5" height="1" rx="0.5" fill="#1E90FF"/>
+        <rect x="5" y="9" width="6" height="1" rx="0.5" fill="#FF69B4"/>
+      </svg>`
+    };
+
+    // Load and render each SVG
+    function loadIcons() {
+      [128, 48, 16].forEach(size => {
+        const canvas = document.getElementById(`canvas${size}`);
+        const ctx = canvas.getContext('2d');
+        const img = new Image();
+        
+        img.onload = function() {
+          ctx.drawImage(img, 0, 0, size, size);
+        };
+        
+        const blob = new Blob([svgContent[size]], { type: 'image/svg+xml' });
+        const url = URL.createObjectURL(blob);
+        img.src = url;
+      });
+    }
+
+    // Download icon as PNG
+    function downloadIcon(size) {
+      const canvas = document.getElementById(`canvas${size}`);
+      canvas.toBlob(function(blob) {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `icon${size}.png`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        
+        document.getElementById(`status${size}`).textContent = '✓ Downloaded!';
+        setTimeout(() => {
+          document.getElementById(`status${size}`).textContent = '';
+        }, 3000);
+      });
+    }
+
+    // Load icons on page load
+    window.addEventListener('load', loadIcons);
+  </script>
+</body>
+</html>

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kindle Highlighter Shortcuts - Options</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 30px;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .header p {
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    .content {
+      padding: 40px;
+    }
+
+    .section {
+      margin-bottom: 30px;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .shortcut-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .shortcut-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .shortcut-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 500;
+      color: #333;
+    }
+
+    .color-indicator {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 2px solid #ddd;
+    }
+
+    .color-indicator.yellow {
+      background-color: #FFD700;
+    }
+
+    .color-indicator.blue {
+      background-color: #1E90FF;
+    }
+
+    .color-indicator.pink {
+      background-color: #FF69B4;
+    }
+
+    .color-indicator.orange {
+      background-color: #FF8C00;
+    }
+
+    .shortcut-input {
+      padding: 10px 16px;
+      border: 2px solid #e0e0e0;
+      border-radius: 6px;
+      font-size: 14px;
+      min-width: 200px;
+      text-align: center;
+      font-weight: 500;
+      transition: border-color 0.2s;
+      background: white;
+    }
+
+    .shortcut-input:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .shortcut-input.recording {
+      border-color: #667eea;
+      background: #f0f4ff;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 30px;
+    }
+
+    button {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-secondary {
+      background: #e0e0e0;
+      color: #333;
+    }
+
+    .btn-secondary:hover {
+      background: #d0d0d0;
+    }
+
+    .info-box {
+      background: #e3f2fd;
+      border-left: 4px solid #2196F3;
+      padding: 16px;
+      border-radius: 4px;
+      margin-bottom: 24px;
+    }
+
+    .info-box p {
+      color: #1565C0;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .status-message {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 16px 24px;
+      border-radius: 6px;
+      color: white;
+      font-weight: 500;
+      opacity: 0;
+      transform: translateX(400px);
+      transition: all 0.3s;
+      z-index: 1000;
+    }
+
+    .status-message.show {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .status-message.success {
+      background: #4CAF50;
+    }
+
+    .status-message.error {
+      background: #f44336;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>⌨️ Kindle Highlighter Shortcuts</h1>
+      <p>Customize your keyboard shortcuts for quick text highlighting</p>
+    </div>
+
+    <div class="content">
+      <div class="info-box">
+        <p><strong>How to use:</strong> Click on any shortcut field and press your desired key combination. The extension will automatically detect and save your shortcut.</p>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">Highlight Colors</h2>
+        
+        <div class="shortcut-item">
+          <div class="shortcut-label">
+            <div class="color-indicator yellow"></div>
+            <span>Yellow Highlight</span>
+          </div>
+          <input type="text" class="shortcut-input" id="yellow-shortcut" placeholder="Click to set shortcut" readonly>
+        </div>
+
+        <div class="shortcut-item">
+          <div class="shortcut-label">
+            <div class="color-indicator blue"></div>
+            <span>Blue Highlight</span>
+          </div>
+          <input type="text" class="shortcut-input" id="blue-shortcut" placeholder="Click to set shortcut" readonly>
+        </div>
+
+        <div class="shortcut-item">
+          <div class="shortcut-label">
+            <div class="color-indicator pink"></div>
+            <span>Pink Highlight</span>
+          </div>
+          <input type="text" class="shortcut-input" id="pink-shortcut" placeholder="Click to set shortcut" readonly>
+        </div>
+
+        <div class="shortcut-item">
+          <div class="shortcut-label">
+            <div class="color-indicator orange"></div>
+            <span>Orange Highlight</span>
+          </div>
+          <input type="text" class="shortcut-input" id="orange-shortcut" placeholder="Click to set shortcut" readonly>
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button class="btn-primary" id="save-btn">Save Settings</button>
+        <button class="btn-secondary" id="reset-btn">Reset to Defaults</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="status-message" id="status-message"></div>
+
+  <script src="options.js"></script>
+</body>
+</html>
